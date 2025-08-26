@@ -6,6 +6,6 @@ order: 1
 
 Here is some of what I have been up to:
 
-![tryhackme stats](https://raw.githubusercontent.com/gmatodias/gmatodias/master/assets/thm_propic.png)
+<script src="https://tryhackme.com/badge/2862973"></script>
 
 
