@@ -6,6 +6,6 @@ order: 1
 
 Here is some of what I have been up to:
 
-{{ site.thm_badge }}
+![tryhackme stats](https://raw.githubusercontent.com/gmatodias/gmatodias/master/assets/thm_propic.png)
 
 
