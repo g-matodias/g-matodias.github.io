@@ -1,0 +1,33 @@
+<p>Primary Objectives:</p>
+
+<ul>
+  <li>
+    <p>Find User Flag</p>
+  </li>
+  <li>
+    <p>Find Root Flag</p>
+  </li>
+</ul>
+
+<p>Procedure:</p>
+
+<p>We will start with NMAP to determine open ports on the machine IP. Let’s use the -v flag to get some more information from our scan.</p>
+
+<p><code class="language-plaintext highlighter-rouge">nmap -v [machine_ip]</code></p>
+
+<p>SSH is open on port 22 and HTTP on port 80. Additionally, we are given a host name here which we will need to add to <code class="language-plaintext highlighter-rouge">/etc/hosts</code>.</p>
+
+<blockquote class="prompt-info">
+  <p>Note: Without the <code class="language-plaintext highlighter-rouge">[machine_ip]	lookup.thm</code> entry in hosts, we will get the following.</p>
+</blockquote>
+
+<p>NMAP previously showed us that a web server on port 80 is open, let’s check one more thing before opening it up in a browser.</p>
+
+<p>If we telnet into the HTTP port using <code class="language-plaintext highlighter-rouge">telnet [machine_ip] 80</code> we get a successful connection.</p>
+
+<p>We are going to use an HTTP GET to grab what is found at the root location with the following command <code class="language-plaintext highlighter-rouge">GET / HTTP/1.1</code>. Notice how the terminal accepted the line and is now idle again? Let’s follow up the first command by specifying our host <code class="language-plaintext highlighter-rouge">host: lookup.thm</code> followed by hitting enter two more times.</p>
+
+<p>Success! We get a response back with some information. Let’s take a quick look and see if anything is of particular interest. In this case, the only thing that really pops out to me is <code class="language-plaintext highlighter-rouge">login.php</code> but for the purposes of this room we are going to move on and look at the page in a browser.</p>
+
+<p>The loaded page is a simple login screen asking for a username and password.</p>
+
