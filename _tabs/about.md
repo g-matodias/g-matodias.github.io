@@ -6,7 +6,7 @@ order: 1
 
 Here is some of what I have been up to:
 
-<img src="https://tryhackme-badges.s3.amazonaws.com/gmatodias.png" alt="Your Image Badge" />
+<image src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=2862973" style='border:none;'></image>
 
 
 
