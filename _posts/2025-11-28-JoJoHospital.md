@@ -1,3 +1,15 @@
+---
+layout: post
+title: '"JoJoHospital"'
+categories: KQL KC7
+date: 2025-11-28
+draft: true
+tags: forensics
+---
+
+
+
+
 Ransom Note: https://youtu.be/06pzJRrtGAM
 
 
