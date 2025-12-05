@@ -4,7 +4,7 @@
   <id>http://localhost:4000/</id>
   <title>Darian</title>
   <subtitle>A minimal, responsive and feature-rich Jekyll theme for technical writing.</subtitle>
-  <updated>2025-08-26T15:56:07-07:00</updated>
+  <updated>2025-09-15T08:40:31-07:00</updated>
   <author>
     <name>g-matodias</name>
     <uri>http://localhost:4000/</uri>
@@ -20,8 +20,8 @@
 
   
   <entry>
-    <title>TEST</title>
-    <link href="http://localhost:4000/posts/TEST/" rel="alternate" type="text/html" title="TEST" />
+    <title>Practical Malware Analysis Lab 1-1</title>
+    <link href="http://localhost:4000/posts/TEST/" rel="alternate" type="text/html" title="Practical Malware Analysis Lab 1-1" />
     <published>2025-02-02T00:00:00-08:00</published>
   
     <updated>2025-08-26T15:44:45-07:00</updated>
@@ -40,7 +40,7 @@
     
   
 
-  <summary>For this lab we will be utilizing the files Lab01-01.exe and Lab01-01.dll located on our FlareVM machine at C:\Users\FlareVM\Desktop\Tools  Tools I will be using for this lab: PEid, PEviewer, Dependancy Walker, Strings  Lab 1-1:          Upload the files to https://www.virustotal.com and view the reports. Does this file match any existing antivirus signatures?      The FlareVM setup I am runnin...</summary>
+  <summary>For this lab we will be utilizing the files Lab01-01.exe and Lab01-01.dll located on our FlareVM machine at C:\Users\FlareVM\Desktop\Tools   Tools I will be using for this lab: PEid, PEviewer, Dependancy Walker, Strings  1. Upload the files to https://www.virustotal.com and view the reports. Does this file match any existing antivirus signatures?  Pulling the hash of one file can be done with t...</summary>
 
   </entry>
 
