@@ -4,7 +4,7 @@
   <id>http://localhost:4000/</id>
   <title>Darian</title>
   <subtitle>A minimal, responsive and feature-rich Jekyll theme for technical writing.</subtitle>
-  <updated>2025-09-15T08:40:31-07:00</updated>
+  <updated>2025-12-04T18:27:16-08:00</updated>
   <author>
     <name>g-matodias</name>
     <uri>http://localhost:4000/</uri>
@@ -20,11 +20,37 @@
 
   
   <entry>
+    <title>"JoJoHospital"</title>
+    <link href="http://localhost:4000/posts/JoJoHospital/" rel="alternate" type="text/html" title="&amp;quot;JoJoHospital&amp;quot;" />
+    <published>2025-11-28T00:00:00-08:00</published>
+  
+    <updated>2025-12-04T16:52:55-08:00</updated>
+  
+    <id>http://localhost:4000/posts/JoJoHospital/</id>
+    <content type="text/html" src="http://localhost:4000/posts/JoJoHospital/" />
+    <author>
+      <name>g-matodias</name>
+    </author>
+
+  
+    
+    <category term="KQL" />
+    
+    <category term="KC7" />
+    
+  
+
+  <summary>This is a walkthrough of the KC7 Case “JoJoHospital”. All questions below are presented in the order of the case unless otherwise specified. All active links have been defanged with brackets to prevent accidental clicks.            Hospital LockByte Note      Patient LockByte Note     We can find the total number locked files by looking for files that end with “.encrypted”  FileCreationEvents |...</summary>
+
+  </entry>
+
+  
+  <entry>
     <title>Practical Malware Analysis Lab 1-1</title>
     <link href="http://localhost:4000/posts/TEST/" rel="alternate" type="text/html" title="Practical Malware Analysis Lab 1-1" />
     <published>2025-02-02T00:00:00-08:00</published>
   
-    <updated>2025-08-26T15:44:45-07:00</updated>
+    <updated>2025-12-04T17:01:16-08:00</updated>
   
     <id>http://localhost:4000/posts/TEST/</id>
     <content type="text/html" src="http://localhost:4000/posts/TEST/" />
