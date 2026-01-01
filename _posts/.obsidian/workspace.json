@@ -1,0 +1,215 @@
+{
+  "main": {
+    "id": "c17217c6ea475686",
+    "type": "split",
+    "children": [
+      {
+        "id": "0debfdafad4aa72f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "aaafc796f09b2cd3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2025-02-02-TEST.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2025-02-02-TEST"
+            }
+          },
+          {
+            "id": "f97889d86667a2f2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "YYYY-MM-DD-TITLE.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "YYYY-MM-DD-TITLE"
+            }
+          },
+          {
+            "id": "058224267d2bd68d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2025-11-28-JoJoHospital.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2025-11-28-JoJoHospital"
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "26d1a61c447570d1",
+    "type": "split",
+    "children": [
+      {
+        "id": "4b01e8759b99a7fe",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "35148eef25b70fc9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "b1c97b272d0eb515",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "207d231095343ad5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "f16869c3cd648d39",
+    "type": "split",
+    "children": [
+      {
+        "id": "e59ee22ee40030a5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c359e609d96f750a",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "8fdf2e68b8df6bc8",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "2c4ac1ea94edf313",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "2025-11-28-JoJoHospital.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of 2025-11-28-JoJoHospital"
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "templater-obsidian:Templater": false
+    }
+  },
+  "active": "058224267d2bd68d",
+  "lastOpenFiles": [
+    "2025-12-18-AzureCrest.md",
+    "Untitled.md",
+    "2025-11-28-JoJoHospital.md",
+    "2025-02-02-TEST.md",
+    "Untitled 5.md",
+    "Untitled 4.md",
+    "Untitled 3.md",
+    "Untitled 2.md",
+    "Untitled 1.md",
+    "AzureCrest202020.md",
+    "YYYY-MM-DD-TITLE.md",
+    "dfkefef.md",
+    "fegwe.md",
+    "fewgwg.md",
+    "rote.md",
+    "test.md",
+    "Testing 2020-2-22.md",
+    "Testing akfkskfksaksg.md",
+    "Test.md",
+    "templates/Templater Script.md",
+    "templates/Templater Script",
+    "templates/KC7 Template.md",
+    "_includes",
+    "Testing.md",
+    "2025-12-18-AzureCrest 1.md",
+    "templates",
+    "KC7 Template.md"
+  ]
+}
