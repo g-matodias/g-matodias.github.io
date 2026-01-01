@@ -4,7 +4,7 @@
   <id>http://localhost:4000/</id>
   <title>Darian</title>
   <subtitle>A minimal, responsive and feature-rich Jekyll theme for technical writing.</subtitle>
-  <updated>2025-12-04T18:27:16-08:00</updated>
+  <updated>2026-01-01T11:53:28-08:00</updated>
   <author>
     <name>g-matodias</name>
     <uri>http://localhost:4000/</uri>
@@ -13,10 +13,36 @@
   <link rel="alternate" type="text/html" hreflang="en"
     href="http://localhost:4000/"/>
   <generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator>
-  <rights> © 2025 g-matodias </rights>
+  <rights> © 2026 g-matodias </rights>
   <icon>/assets/img/favicons/favicon.ico</icon>
   <logo>/assets/img/favicons/favicon-96x96.png</logo>
 
+
+  
+  <entry>
+    <title>"AzureCrest"</title>
+    <link href="http://localhost:4000/posts/AzureCrest/" rel="alternate" type="text/html" title="&amp;quot;AzureCrest&amp;quot;" />
+    <published>2025-12-19T00:00:00-08:00</published>
+  
+    <updated>2025-12-19T00:00:00-08:00</updated>
+  
+    <id>http://localhost:4000/posts/AzureCrest/</id>
+    <content type="text/html" src="http://localhost:4000/posts/AzureCrest/" />
+    <author>
+      <name>g-matodias</name>
+    </author>
+
+  
+    
+    <category term="CATEGORY-1" />
+    
+    <category term="CATEGORY-2" />
+    
+  
+
+  <summary>This is a walkthrough of the KC7 Case “AzureCrest”. All questions below are presented in the order of the case unless otherwise specified. All active links have been defanged with brackets to prevent accidental clicks.      Section 1  Q1: How many employees work at Azure Crest Hospital? Employees  | count  250     Q2: What is the Chief Financial Officer’s name?  Employees | where role == "Chief...</summary>
+
+  </entry>
 
   
   <entry>
@@ -24,7 +50,7 @@
     <link href="http://localhost:4000/posts/JoJoHospital/" rel="alternate" type="text/html" title="&amp;quot;JoJoHospital&amp;quot;" />
     <published>2025-11-28T00:00:00-08:00</published>
   
-    <updated>2025-12-04T16:52:55-08:00</updated>
+    <updated>2025-12-04T18:27:49-08:00</updated>
   
     <id>http://localhost:4000/posts/JoJoHospital/</id>
     <content type="text/html" src="http://localhost:4000/posts/JoJoHospital/" />
@@ -40,7 +66,7 @@
     
   
 
-  <summary>This is a walkthrough of the KC7 Case “JoJoHospital”. All questions below are presented in the order of the case unless otherwise specified. All active links have been defanged with brackets to prevent accidental clicks.            Hospital LockByte Note      Patient LockByte Note     We can find the total number locked files by looking for files that end with “.encrypted”  FileCreationEvents |...</summary>
+  <summary>This is a walkthrough of the KC7 Case “JoJoHospital”. All questions below are presented in the order of the case unless otherwise specified. All active links have been defanged with brackets to prevent accidental clicks.      Section 1 - “Crypto - but the bad kind”  Questions 1-10  Q1: How many hours did the hackers give the hospital to pay the ransom?    72 hours       Q2: What was the name of...</summary>
 
   </entry>
 
