@@ -1,11 +1,10 @@
 ---
 layout: post
 title: '"AzureCrest"'
-categories: CATEGORY-1 CATEGORY-2
+categories: KQL KC7
 date: 2025-12-19
 draft: true
-tags:
-  - TAG
+tags: forensics
 ---
 
 > This is a walkthrough of the KC7 Case "AzureCrest". All questions below are presented in the order of the case unless otherwise specified. **All active links have been defanged with brackets to prevent accidental clicks.**

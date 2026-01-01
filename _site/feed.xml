@@ -4,7 +4,7 @@
   <id>http://localhost:4000/</id>
   <title>Darian</title>
   <subtitle>A minimal, responsive and feature-rich Jekyll theme for technical writing.</subtitle>
-  <updated>2026-01-01T11:53:28-08:00</updated>
+  <updated>2026-01-01T12:14:14-08:00</updated>
   <author>
     <name>g-matodias</name>
     <uri>http://localhost:4000/</uri>
@@ -34,9 +34,9 @@
 
   
     
-    <category term="CATEGORY-1" />
+    <category term="KQL" />
     
-    <category term="CATEGORY-2" />
+    <category term="KC7" />
     
   
 
@@ -50,7 +50,7 @@
     <link href="http://localhost:4000/posts/JoJoHospital/" rel="alternate" type="text/html" title="&amp;quot;JoJoHospital&amp;quot;" />
     <published>2025-11-28T00:00:00-08:00</published>
   
-    <updated>2025-12-04T18:27:49-08:00</updated>
+    <updated>2026-01-01T12:04:14-08:00</updated>
   
     <id>http://localhost:4000/posts/JoJoHospital/</id>
     <content type="text/html" src="http://localhost:4000/posts/JoJoHospital/" />
