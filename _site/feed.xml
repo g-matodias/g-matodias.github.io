@@ -4,7 +4,7 @@
   <id>http://localhost:4000/</id>
   <title>Darian</title>
   <subtitle>A minimal, responsive and feature-rich Jekyll theme for technical writing.</subtitle>
-  <updated>2026-01-01T12:14:14-08:00</updated>
+  <updated>2026-01-01T12:34:39-08:00</updated>
   <author>
     <name>g-matodias</name>
     <uri>http://localhost:4000/</uri>
@@ -24,7 +24,7 @@
     <link href="http://localhost:4000/posts/AzureCrest/" rel="alternate" type="text/html" title="&amp;quot;AzureCrest&amp;quot;" />
     <published>2025-12-19T00:00:00-08:00</published>
   
-    <updated>2025-12-19T00:00:00-08:00</updated>
+    <updated>2026-01-01T12:14:47-08:00</updated>
   
     <id>http://localhost:4000/posts/AzureCrest/</id>
     <content type="text/html" src="http://localhost:4000/posts/AzureCrest/" />
