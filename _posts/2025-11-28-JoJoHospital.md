@@ -816,13 +816,6 @@ PassiveDns
 #### **Q10: What is the hostname of the first person to download the suspicious docx file?**  
 
 
-&nbsp;
-
-<hr style="height: 2px; background-color: #333; border: none;">
-
-#### **Q10: What is the hostname of the first person to download the suspicious docx file?**  
-
-
 ```
 FileCreationEvents
 | where filename == "Raisin_Kane_Promo_Offer.docx"
