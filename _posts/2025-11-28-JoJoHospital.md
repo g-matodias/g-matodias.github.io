@@ -976,7 +976,7 @@ Employees
 
 <hr style="height: 2px; background-color: #333; border: none;">
 
-### **Questions 20-26**  
+### **Questions 21-26**  
 
 #### **Q21: When did the attackers connect to their IP address using cobalt strike on Anthony Davis' machine?**  
 
