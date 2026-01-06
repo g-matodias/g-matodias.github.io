@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '"AzureCrest"'
+title: 'AzureCrest [Draft]'
 categories: KQL KC7
 date: 2025-12-19
 draft: true
@@ -13,9 +13,11 @@ tags: forensics
 &nbsp;
 
 
-## Section 1
+## Section 1  
 
-**Q1: How many employees work at Azure Crest Hospital?**
+### Questions 1-8
+
+#### **Q1: How many employees work at Azure Crest Hospital?**
 ```
 Employees 
 | count
@@ -25,8 +27,7 @@ Employees
 &nbsp;
 
 
-
-**Q2: What is the Chief Financial Officer's name?**
+#### **Q2: What is the Chief Financial Officer's name?**
 
 ```
 Employees
@@ -37,7 +38,7 @@ Employees
 &nbsp;
 
 
-**Q3: How many distinct senders were seen in the email logs from pharmabest.net?**
+#### **Q3: How many distinct senders were seen in the email logs from pharmabest.net?**
 
 ```
 Email
@@ -51,7 +52,7 @@ Email
 &nbsp;
 
 
-**Q4: How many distinct websites did “Penny Pincher” visit?**
+#### **Q4: How many distinct websites did “Penny Pincher” visit?**
 
 Let's dump the information from Employees here for reference:
 ```
@@ -87,7 +88,7 @@ OutboundNetworkEvents
 &nbsp;
 
 
-**Q5: How many distinct domains in the PassiveDns records contain the word “health”?**
+#### **Q5: How many distinct domains in the PassiveDns records contain the word “health”?**
 
 ```
 PassiveDns
@@ -101,7 +102,7 @@ PassiveDns
 &nbsp;
 
 
-**Q6: What IPs did the domain “bit.ly” resolve to (enter any one of them)?**
+#### **Q6: What IPs did the domain “bit.ly” resolve to (enter any one of them)?**
 
 ```
 PassiveDns
@@ -116,7 +117,7 @@ PassiveDns
 &nbsp;
 
 
-**Q7: How many distinct URLs did employees with the first name "Mary" Visit?**
+#### **Q7: How many distinct URLs did employees with the first name "Mary" Visit?**
 
 ```
 let mary_ips =
@@ -133,7 +134,7 @@ OutboundNetworkEvents
 &nbsp;
 
 
-**Q8: How many authentication attempts did we see to the accounts of employees with the first name Mary?**
+#### **Q8: How many authentication attempts did we see to the accounts of employees with the first name Mary?**
 
 Let's call the variable `mary_auth` for our query:
 ```
@@ -150,10 +151,11 @@ AuthenticationEvents
 
 ## Section 2
 
+### Questions 1-10
 
-**Context: We received a security alert a few days ago that a file with the word 'healthcare' was quarantined. We know that it's your first day here, but we get these alerts all the time and they are usually nothing. What could possibly go wrong?**
+#### **Q1: What is the name of the file that was quarantined?**  
 
-**Q1: What is the name of the file that was quarantined?**
+We received a security alert a few days ago that a file with the word 'healthcare' was quarantined. We know that it's your first day here, but we get these alerts all the time and they are usually nothing. What could possibly go wrong?
 
 &nbsp;
 
